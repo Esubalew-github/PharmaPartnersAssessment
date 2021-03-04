@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface CurrencyRepository extends JpaRepository<Currency, Long> , CrudRepository<Currency, Long> {
+public interface CurrencyRepository extends JpaRepository<Currency, Long> {
 
     List<Currency> findByTicker(String ticker);
 
