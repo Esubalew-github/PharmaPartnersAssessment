@@ -44,8 +44,6 @@ This interface will be autowired in CurencyController. The implementation is plu
 I also create a controller that provides APIs for creating, retrieving, updating, deleting and finding Currency. The CurrencyController [controller/CurrencyController.java] is a RestController which has request mapping methods for RESTful requests such as: getAllCurrencies, createCurrency, updateCurrency, deleteCurrency, findByTicker, findByName and so on.
 I also use the following anotation for the class.
 
-- @CrossOrigin which is for configuring allowed origins.
-
 - @RestController annotation which used to define a controller and to indicate that the return value of the methods should be be bound to the web response body.
 
 - @RequestMapping("/api") which declares that all APIs’ url in the controller will start with /api.
