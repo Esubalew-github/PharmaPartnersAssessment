@@ -48,57 +48,27 @@ public class CurrencyController {
         return Sort.Direction.ASC;
  }
 
- @GetMapping(value="/sortedcurrencies", produces = MediaType.APPLICATION_JSON_VALUE)
- public ResponseEntity<List<Currency>> getAllCurrencies(@RequestParam(defaultValue = "id,desc") String[] sortIdDir) {
-
-        try {
-            List<Order> orders = new ArrayList<Order>();
-
-            if (sortIdDir[0].contains(",")) {
-                // will sort more than 2 fields
-                // sortOrder="field, direction"
-                for (String sortOrder : sortIdDir) {
-                    String[] _sort = sortOrder.split(",");
-                    orders.add(new Order(getSortDirection(_sort[1]), _sort[0]));
-                }
-            } else {
-                // sort=[field, direction]
-                orders.add(new Order(getSortDirection(sortIdDir[1]), sortIdDir[0]));
-            }
-
-            List<Currency> currencies = currencyRepository.findAll(Sort.by(orders));
-
-            if (currencies.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
-            return new ResponseEntity<>(currencies, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping(value="/currencies", produces = MediaType.APPLICATION_JSON_VALUE)
+     @GetMapping(value="/currencies", produces = MediaType.APPLICATION_JSON_VALUE)
 
     public ResponseEntity<Map<String, Object>> getAllCurrenciesPage(
             @RequestParam(required = false) String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "3") int size,
-            @RequestParam(defaultValue = "id,desc") String[] sortIdDir) {
+            @RequestParam(defaultValue = "id,desc") String[] sortFieldDirection) {
 
         try {
             List<Order> orders = new ArrayList<Order>();
 
-            if (sortIdDir[0].contains(",")) {
+            if (sortFieldDirection[0].contains(",")) {
                 // will sort more than 2 fields
                 // sortOrder="field, direction"
-                for (String sortOrder : sortIdDir) {
+                for (String sortOrder : sortFieldDirection) {
                     String[] _sort = sortOrder.split(",");
                     orders.add(new Order(getSortDirection(_sort[1]), _sort[0]));
                 }
             } else {
                 // sort=[field, direction]
-                orders.add(new Order(getSortDirection(sortIdDir[1]), sortIdDir[0]));
+                orders.add(new Order(getSortDirection(sortFieldDirection[1]), sortFieldDirection[0]));
             }
 
             List<Currency> currencies = new ArrayList<Currency>();
@@ -120,30 +90,6 @@ public class CurrencyController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping(value="/currencies/ticker", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, Object>> findByTicker(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "3") int size) {
-
-        try {
-            List<Currency> currencies = new ArrayList<Currency>();
-            Pageable paging = PageRequest.of(page, size);
-
-            Page<Currency> pageCurrencies = currencyRepository.findByTicker("BTC", paging);
-            currencies = pageCurrencies.getContent();
-
-            Map<String, Object> response = new HashMap<>();
-            response.put("currencies", currencies);
-            response.put("currentPage", pageCurrencies.getNumber());
-            response.put("totalItems", pageCurrencies.getTotalElements());
-            response.put("totalPages", pageCurrencies.getTotalPages());
-
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -203,6 +149,60 @@ public class CurrencyController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    @GetMapping(value="/sortedcurrencies", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Currency>> getAllCurrencies(@RequestParam(defaultValue = "id,desc") String[] sortFieldDirection) {
+
+        try {
+            List<Order> orders = new ArrayList<Order>();
+
+            if (sortFieldDirection[0].contains(",")) {
+                // will sort more than 2 fields
+                // sortOrder="field, direction"
+                for (String sortOrder : sortFieldDirection) {
+                    String[] _sort = sortOrder.split(",");
+                    orders.add(new Order(getSortDirection(_sort[1]), _sort[0]));
+                }
+            } else {
+                // sort=[field, direction]
+                orders.add(new Order(getSortDirection(sortFieldDirection[1]), sortFieldDirection[0]));
+            }
+
+            List<Currency> currencies = currencyRepository.findAll(Sort.by(orders));
+
+            if (currencies.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(currencies, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value="/currencies/ticker", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, Object>> findByTicker(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "3") int size) {
+
+        try {
+            List<Currency> currencies = new ArrayList<Currency>();
+            Pageable paging = PageRequest.of(page, size);
+
+            Page<Currency> pageCurrencies = currencyRepository.findByTicker("BTC", paging);
+            currencies = pageCurrencies.getContent();
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("currencies", currencies);
+            response.put("currentPage", pageCurrencies.getNumber());
+            response.put("totalItems", pageCurrencies.getTotalElements());
+            response.put("totalPages", pageCurrencies.getTotalPages());
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
