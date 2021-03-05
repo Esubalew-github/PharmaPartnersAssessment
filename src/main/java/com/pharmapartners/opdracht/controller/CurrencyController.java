@@ -48,7 +48,7 @@ public class CurrencyController {
         return Sort.Direction.ASC;
  }
 
-     @GetMapping(value="/currencies", produces = MediaType.APPLICATION_JSON_VALUE)
+     @GetMapping("/currencies")
 
     public ResponseEntity<Map<String, Object>> getAllCurrenciesPage(
             @RequestParam(required = false) String sort,
@@ -93,7 +93,7 @@ public class CurrencyController {
         }
     }
 
-    @GetMapping(value="/currencies/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/currencies/{id}")
     public ResponseEntity<Currency> getCurrencyById(@PathVariable("id") long id) {
         Optional<Currency> currencyData = currencyRepository.findById(id);
 
@@ -104,7 +104,7 @@ public class CurrencyController {
         }
     }
 
-    @PostMapping(value="/currencies", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/currencies")
     public ResponseEntity<Currency> createCurrency(@RequestBody Currency currency) {
         try {
             Currency _currency = currencyRepository.save(new Currency(currency.getTicker(), currency.getName(), currency.getNumber_of_coins(), currency.getMarket_cap()));
@@ -114,7 +114,7 @@ public class CurrencyController {
         }
     }
 
-    @PutMapping(value="/currencies/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping("/currencies/{id}")
     public ResponseEntity<Currency> updateCurrency(@PathVariable("id") long id, @RequestBody Currency currency) {
         Optional<Currency> currencyData = currencyRepository.findById(id);
 
@@ -151,7 +151,7 @@ public class CurrencyController {
 
     }
 
-    @GetMapping(value="/sortedcurrencies", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/sortedcurrencies")
     public ResponseEntity<List<Currency>> getAllCurrencies(@RequestParam(defaultValue = "id,desc") String[] sortFieldDirection) {
 
         try {
@@ -181,7 +181,7 @@ public class CurrencyController {
         }
     }
 
-    @GetMapping(value="/currencies/ticker", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/currencies/ticker")
     public ResponseEntity<Map<String, Object>> findByTicker(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "3") int size) {
@@ -191,10 +191,9 @@ public class CurrencyController {
             Pageable paging = PageRequest.of(page, size);
 
             Page<Currency> pageCurrencies = currencyRepository.findByTicker("BTC", paging);
-            currencies = pageCurrencies.getContent();
 
             Map<String, Object> response = new HashMap<>();
-            response.put("currencies", currencies);
+            response.put("currencies", pageCurrencies.getContent());
             response.put("currentPage", pageCurrencies.getNumber());
             response.put("totalItems", pageCurrencies.getTotalElements());
             response.put("totalPages", pageCurrencies.getTotalPages());
