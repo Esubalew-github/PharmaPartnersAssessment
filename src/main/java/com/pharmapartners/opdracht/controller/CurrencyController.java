@@ -49,21 +49,21 @@ public class CurrencyController {
  }
 
  @GetMapping(value="/sortedcurrencies", produces = MediaType.APPLICATION_JSON_VALUE)
- public ResponseEntity<List<Currency>> getAllCurrencies(@RequestParam(defaultValue = "id,desc") String[] sort) {
+ public ResponseEntity<List<Currency>> getAllCurrencies(@RequestParam(defaultValue = "id,desc") String[] sortIdDir) {
 
         try {
             List<Order> orders = new ArrayList<Order>();
 
-            if (sort[0].contains(",")) {
+            if (sortIdDir[0].contains(",")) {
                 // will sort more than 2 fields
                 // sortOrder="field, direction"
-                for (String sortOrder : sort) {
+                for (String sortOrder : sortIdDir) {
                     String[] _sort = sortOrder.split(",");
                     orders.add(new Order(getSortDirection(_sort[1]), _sort[0]));
                 }
             } else {
                 // sort=[field, direction]
-                orders.add(new Order(getSortDirection(sort[1]), sort[0]));
+                orders.add(new Order(getSortDirection(sortIdDir[1]), sortIdDir[0]));
             }
 
             List<Currency> currencies = currencyRepository.findAll(Sort.by(orders));
@@ -81,40 +81,39 @@ public class CurrencyController {
     @GetMapping(value="/currencies", produces = MediaType.APPLICATION_JSON_VALUE)
 
     public ResponseEntity<Map<String, Object>> getAllCurrenciesPage(
-            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String sort,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "3") int size,
-            @RequestParam(defaultValue = "id,desc") String[] sort) {
+            @RequestParam(defaultValue = "id,desc") String[] sortIdDir) {
 
         try {
             List<Order> orders = new ArrayList<Order>();
 
-            if (sort[0].contains(",")) {
+            if (sortIdDir[0].contains(",")) {
                 // will sort more than 2 fields
                 // sortOrder="field, direction"
-                for (String sortOrder : sort) {
+                for (String sortOrder : sortIdDir) {
                     String[] _sort = sortOrder.split(",");
                     orders.add(new Order(getSortDirection(_sort[1]), _sort[0]));
                 }
             } else {
                 // sort=[field, direction]
-                orders.add(new Order(getSortDirection(sort[1]), sort[0]));
+                orders.add(new Order(getSortDirection(sortIdDir[1]), sortIdDir[0]));
             }
 
             List<Currency> currencies = new ArrayList<Currency>();
             Pageable pagingSort = PageRequest.of(page, size, Sort.by(orders));
 
             Page<Currency> pageCurrencies;
-            if (name == null)
+            if (sort == null)
                 pageCurrencies = currencyRepository.findAll(pagingSort);
             else
-                pageCurrencies = currencyRepository.findByName(name, pagingSort);
 
-            currencies = pageCurrencies.getContent();
+            pageCurrencies = currencyRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, sort)));
 
             Map<String, Object> response = new HashMap<>();
-            response.put("currencies", currencies);
-            response.put("currentPage",pageCurrencies.getNumber());
+            response.put("currencies",  pageCurrencies.getContent());
+            response.put("currentPage", pageCurrencies.getNumber());
             response.put("totalItems", pageCurrencies.getTotalElements());
             response.put("totalPages", pageCurrencies.getTotalPages());
 
