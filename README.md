@@ -93,7 +93,7 @@ All Currencies after delete:
 
 ![alt text](https://github.com/Esubalew-github/PharmaPartnersAssessment/blob/main/Schermafbeelding%202021-03-06%20155942.png)
 
-This Spring Boot Application will also provide APIs for Pagination and Sorting by Ascending or Descending order. One of the result is shown below [i.e. It is for default paging index (0), size (3)]:
+This Spring Boot Application will also provide APIs for Pagination and Sorting by Ascending or Descending order. One of the result is shown below:
 
 
 ![alt text](https://github.com/Esubalew-github/PharmaPartnersAssessment/blob/main/Schermafbeelding%202021-03-06%20114606.png)
