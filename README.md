@@ -32,11 +32,7 @@ Our data model is Currency with four fields: ticker, name, number_of_coins and m
 
 ## Repository Interface & Spring Rest APIs Controller
 
-I create a repository to interact with Currencies from the database. CurrencyRepository [repository/CurrencyRepository.java] is an interface that extends JpaRepository for CRUD methods. And hence, it uses JpaRepository’s methods: save(), findOne(), findById(), findAll(), count(), delete(), deleteById(). In addition to these methods, I define custom finder methods:
-
-- findByTicker(): returns all Currencies whose ticker match with the input ticker.
-
-- findByName(): returns all Currencies whose name match with the input name.
+I create a repository to interact with Currencies from the database. CurrencyRepository [repository/CurrencyRepository.java] is an interface that extends JpaRepository for CRUD methods. And hence, it uses JpaRepository’s methods: save(), findOne(), findById(), findAll(), count(), delete(), deleteById(). In addition to these methods, I define custom finder methods [findByTicker() & findByName()].
 
 This interface will be autowired in CurencyController. The implementation is plugged in by Spring Data JPA automatically &currencies table will be generated in the H2 Database (in memory).
 
