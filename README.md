@@ -63,7 +63,7 @@ After running JPAUnitTest class, the result shows that all 9 tests [that I tried
 
 Finally, runing the Spring Boot application with command: mvn spring-boot:run & then checking H2 database in the H2 console with url: http://localhost:8080//h2-console/, we can see that currencies table automatically generated in the database. The table will show some availabe recods too. This is because the in-memory database [data.sql] is filled with a number of predefined records before the application started. The H2 database Currencies table looks like this:
 
-![alt text](https://github.com/Esubalew-github/PharmaPartnersAssessment/blob/main/Schermafbeelding%202021-03-04%20022537.png)
+![alt text](https://github.com/Esubalew-github/PharmaPartnersAssessment/blob/main/Schermafbeelding%202021-03-06%20113936.png)
 
 
 Applying some CRUD operations with help of Postman, some of the results are shown below:
@@ -89,6 +89,6 @@ Retrieve a Currency by Id:
 This Spring Boot Application will also provide APIs for Pagination and Sorting by Ascending or Descending order. One of the result is shown below [i.e. It is for default paging index (0), size (3)]:
 
 
-![alt text](https://github.com/Esubalew-github/PharmaPartnersAssessment/blob/main/Schermafbeelding%202021-03-04%20040550.png)
+![alt text](https://github.com/Esubalew-github/PharmaPartnersAssessment/blob/main/Schermafbeelding%202021-03-06%20113807.png)
 
 
