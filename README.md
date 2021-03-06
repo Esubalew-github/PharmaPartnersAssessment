@@ -71,20 +71,27 @@ Applying some CRUD operations with help of Postman, some of the results are show
 Retrieve all Currencies:
 
 
-![alt text](https://github.com/Esubalew-github/PharmaPartnersAssessment/blob/main/Schermafbeelding%202021-03-04%20024910.png)
+![alt text](https://github.com/Esubalew-github/PharmaPartnersAssessment/blob/main/Schermafbeelding%202021-03-06%20155349.png)
 
 
 Retrieve a Currency by Name:
 
  
-![alt text](https://github.com/Esubalew-github/PharmaPartnersAssessment/blob/main/Schermafbeelding%202021-03-04%20025626.png)
+![alt text](https://github.com/Esubalew-github/PharmaPartnersAssessment/blob/main/Schermafbeelding%202021-03-06%20155444.png)
 
 
 Retrieve a Currency by Id:
 
 
-![alt text](https://github.com/Esubalew-github/PharmaPartnersAssessment/blob/main/Schermafbeelding%202021-03-04%20025250.png)
+![alt text](https://github.com/Esubalew-github/PharmaPartnersAssessment/blob/main/Schermafbeelding%202021-03-06%20155537.png)
 
+Delete a Currency by Id:
+
+![alt text](https://github.com/Esubalew-github/PharmaPartnersAssessment/blob/main/Schermafbeelding%202021-03-06%20155831.png)
+
+All Currencies after delete:
+
+![alt text](https://github.com/Esubalew-github/PharmaPartnersAssessment/blob/main/Schermafbeelding%202021-03-06%20155942.png)
 
 This Spring Boot Application will also provide APIs for Pagination and Sorting by Ascending or Descending order. One of the result is shown below [i.e. It is for default paging index (0), size (3)]:
 
