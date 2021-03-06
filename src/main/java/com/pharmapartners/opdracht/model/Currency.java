@@ -1,3 +1,11 @@
+/**
+ * Hero is the main entity we'll be using for our application & has four fields: ticker, name, number_of_coins and
+ * market_cap.
+ *
+ * @author Esubalew A. Demissie
+ *
+ */
+
 package com.pharmapartners.opdracht.model;
 import javax.persistence.*;
 import java.io.Serializable;
