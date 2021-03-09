@@ -101,5 +101,5 @@ This Spring Boot Application will also provide APIs for Pagination and Sorting b
 
 ## Web Frontend
 
-I also implement a web frontend [using Angular] that can use the REST API and the respository is avilable at the github link: https://github.com/Esubalew-github/Angular11Crud.git
+I also implement a web frontend [using Angular] that can use the REST API and the respository is available at the github link: https://github.com/Esubalew-github/Angular11Crud.git
 
